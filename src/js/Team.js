@@ -14,10 +14,12 @@ export default class Team {
 
   iterator() {
     this.to = this.members.size - 1;
+    /*
     const t = this.members[Symbol.iterator]();
+    */
     // eslint-disable-next-line no-unused-vars
     for (const num of this) {
-      console.log(num, t.next().value);
+      console.log(num, this.members[Symbol.iterator]().next().value);
     }
   }
 
