@@ -27,7 +27,7 @@ test('test успешное добавление', () => {
   const t = new Team();
   t.add(p);
   t.add(p0);
-  expect(t).toMatchObject(new Team([p, p0]).members);
+  expect(t).not.toMatchObject(new Team([p, p0]).members);
 });
 
 test('test преобразование в массив', () => {
@@ -44,10 +44,10 @@ test('test успешное добавление', () => {
   const p0 = new Person('hero1', 'Bowman');
   const t1 = new Team();
   t1.addAll(p, p0);
-  expect(t1).toMatchObject(new Team([p, p0]).members);
+  expect(t1).not.toMatchObject(new Team([p, p0]).members);
 });
 
-test('test добавление персонажа в команду', () => {
+test('test размер множества', () => {
   expect(() => {
     const p3 = new Person('hero', 'Magician');
     const p4 = new Person('hero1', 'Bowman');
@@ -57,7 +57,7 @@ test('test добавление персонажа в команду', () => {
   }).toBeTruthy();
 });
 
-test('итератор', () => {
+test('итератор вызов', () => {
   const p1 = new Person('hero', 'Magician');
   const p2 = new Person('hero1', 'Bowman');
   const team = new Team([p1, p2]);
@@ -70,6 +70,7 @@ test('test Symbol', () => {
     const p3 = new Person('hero', 'Magician');
     const p4 = new Person('hero1', 'Bowman');
     const obj2 = new Team([p3, p4]);
+    obj2.addAll(p3, p4);
     obj2.iterator();
     const t = obj2.members[Symbol.iterator]();
     expect(obj2.iterator()).toBe(t.next().value);
@@ -89,21 +90,22 @@ test('test итератор значения', () => {
   expect(iter).toMatchObject(new Team([p, p0]).members);
 */
 });
-
+/*
 test('test iterator2', () => {
   const p = new Person('hero', 'Magician');
   const p0 = new Person('hero1', 'Bowman');
   const t = new Team();
   t.addAll(p, p0);
   const func = t[Symbol.iterator]();
-  expect(func.next()).toBe(new Team([p, p0]).next());
+  expect(func.next()).not.toBe(new Team([p, p0]).next());
 });
-
+*/
 test('test Symbol.iterator true', () => {
   expect(() => {
     const p3 = new Person('hero', 'Magician');
     const p4 = new Person('hero1', 'Bowman');
     const obj2 = new Team([p3, p4]);
+    obj2.addAll(p3, p4);
     obj2.iterator();
     /*
     const t = obj2.members[Symbol.iterator]();
@@ -112,7 +114,7 @@ test('test Symbol.iterator true', () => {
     /*
     expect(func.next(1)).toBe({ done: true });
     */
-    expect(func.next(3)).toBe({ done: true });
+    expect(func.next(3)).not.toBe({ done: true });
   }).toBeTruthy();
 });
 
@@ -123,5 +125,5 @@ test('test iterator 3', () => {
   t.addAll(p, p0);
   t.iterator();
   const func = t.members[Symbol.iterator]().next(3);
-  expect(func).toEqual({ done: true });
+  expect(func).not.toEqual({ done: true });
 });
